@@ -1,4 +1,4 @@
-import { Avatar, Box, Flex, Heading, Text } from "@chakra-ui/react";
+import { Avatar, Box, Flex, Heading, Text,Icon } from "@chakra-ui/react";
 import TextAreaElement from "lib/@core/components/TextArea";
 import {
   forumService,
@@ -9,6 +9,7 @@ import {
 } from "lib/@core/services/forum.service";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import {DeleteIcon} from "@chakra-ui/icons"
 
 const TopicRoom = () => {
   const { id } = useParams<{ id: string }>();
@@ -66,6 +67,11 @@ const Comment = ({ comment }: { comment: ITopicComment }) => {
   );
 };
 
+const handleDeleteComment = async (id: number) => {
+  const response = await forumService.deleteTopicComment(id)
+  console.log("🚀 ~ file: index.tsx ~ line 115 ~ handleDelete ~ response", response)
+}
+
 const Ong = ({ comment }: { comment: ITopicComment }) => {
   const ongData = comment.ongAuthor as IOng;
 
@@ -77,7 +83,11 @@ const Ong = ({ comment }: { comment: ITopicComment }) => {
           <Heading id="author" as="h3" size="md" color={"blackAlpha.600"}>
             {ongData?.name}
           </Heading>
-          <Text >{comment?.creationDate}</Text>
+          <Flex gap={2} alignItems={"center"}>
+            <Text >{comment?.creationDate}</Text>
+            {/* crear un boton delete */}
+            <Icon as={DeleteIcon} onClick={() => handleDeleteComment(comment.id)} />
+          </Flex>
           {/* <Text as="p"></Text> */}
         </Flex>
         <Box color={"blackAlpha.600"}>{comment?.content}</Box>
@@ -97,7 +107,10 @@ const Volunteer = ({ comment }: { comment: ITopicComment }) => {
           <Heading id="author" as="h3" size="md" color={"blackAlpha.600"}>
             {volunteerData.name} {volunteerData.lastName}
           </Heading>
-          <Text >{comment.creationDate}</Text>
+          <Flex gap={2} alignItems={"center"}>
+            <Text >{comment.creationDate}</Text>
+            <Icon as={DeleteIcon} onClick={() => handleDeleteComment(comment.id)} />
+          </Flex>
           {/* <Text as="p"></Text> */}
         </Flex>
         <Box color={"blackAlpha.600"}>{comment.content}</Box>

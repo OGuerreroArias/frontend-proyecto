@@ -1,5 +1,6 @@
 
 const POST_URL = 'http://localhost:8080/projects'
+const DELETE_URL = 'http://localhost:8080/projects/'
 const GET_PROJECTS_BY_ONG_ID = "http://localhost:8080/projects/user/"
 const GET_PROJECT_BY_PROJECT_ID = 'http://localhost:8080/projects/'
 
@@ -55,9 +56,21 @@ const create = async(project: any) => {
 	return response.json()
 };
 
+const deleteProject = async(id: string) => {
+	const response = await fetch(DELETE_URL + id, {
+		method: "DELETE",
+		headers: {
+			'Content-Type': 'application/json',
+			"Access-Control-Allow-Origin": "*",
+		},
+	})
+	return response.json()
+}
+
 export const projectService = {
 	getProjects,
 	getProjectsByOngId: (id: string) => getProjectsByOngId(id),
 	getProjectById: (id: string) => getProjectById(id),
 	create: (project: any) => create(project),
+	deleteProject: (id: string) => deleteProject(id),
 };

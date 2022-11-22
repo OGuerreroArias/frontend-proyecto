@@ -14,7 +14,9 @@ import {
 	Box,
 	Image,
 	Link,
+	Icon
 } from "@chakra-ui/react";
+import {DeleteIcon} from "@chakra-ui/icons";
 import { projectService } from "lib/@core/services/project.service";
 import { Link as ReactRouterLink } from "react-router-dom";
 import { AddIcon } from "@chakra-ui/icons"
@@ -64,17 +66,27 @@ const Projects = () => {
 	return (
 		<>
 			<ProjectModal setProjects={setProjects} />
-			<Flex maxW={"1100px"} m={"auto"} mt={"10"} gap={4} flexDirection={"column"}>
-				{projects?.map((project: ProjectProps) => (
-					<ProjectCard key={project.id} project={project} />
-				))}
-			</Flex>
+			{
+				projects.length === 0 ? (
+					<Box className="no-projects" p={4}>
+						<Heading>No hay proyectos</Heading>
+					</Box>
+				) : (
+						<Flex maxW={"1100px"} m={"auto"} mt={"10"} gap={4} flexDirection={"column"}>
+							{projects?.map((project: ProjectProps) => (
+								<ProjectCard key={project.id} project={project} />
+							))}
+						</Flex>
+				)
+			}
 		</>
 
 	);
 };
 
 const ProjectCard = ({ project }: { project: ProjectProps }) => {
+	const {user,isVolunteer} = useContext(AuthContext)
+
 	return (
 		<Flex boxShadow={"xl"} bg={"white"} flex={1} p={4}>
 			<Box>
@@ -87,11 +99,20 @@ const ProjectCard = ({ project }: { project: ProjectProps }) => {
 				h={"100%"}
 				flexDirection={"column"}
 			>
-				<Heading as="h3" size="md" color={"blackAlpha.600"}>
-					<Link as={ReactRouterLink} to={`/proyectos/${project.id.toString()}`}>
-						{project.name}
-					</Link>
-				</Heading>
+				<Flex justifyContent={"space-between"}>
+					<Heading as="h3" size="md" color={"blackAlpha.600"}>
+						<Link as={ReactRouterLink} to={`/proyectos/${project.id.toString()}`}>
+							{project.name}
+						</Link>
+					</Heading>
+					{
+						!isVolunteer(user) && (
+							<Button onClick={() => projectService.deleteProject((project.id).toString())}>
+								<Icon as={DeleteIcon}  />
+							</Button>
+						)
+					}
+				</Flex>
 				<Text color={"blackAlpha.600"}>{project.description}</Text>
 				<VerticallyCenterModal project={project} />
 			</Flex>

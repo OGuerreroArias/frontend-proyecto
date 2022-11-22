@@ -91,6 +91,7 @@ const GET_TOPICOS = "http://localhost:8080/foro/publications"  // put topico
 const GET_TOPICO_BY_ID = "http://localhost:8080/foro/publications/"  //get topico 
 const POST_COMMIT_TOPIC = "http://localhost:8080/foro/publications/" // solo body
 const POST_COMMIT_TOPIC2 = "/comments"  // coementar un topico por Id  // 370021309 es el id del topico"
+const DELETE_TOPIC_COMMENT = "http://localhost:8080/foro/publications/comments/"
 
 const getAllTopicCards = async (): Promise<any> => {
 	const response = await fetch(GET_TOPICOS,{
@@ -135,9 +136,21 @@ const createTopicComment = async(setTopicCards: any, topicComment: any, topicId:
 	return response.json();
 }
 
+const deleteTopicComment = async(topicId: number): Promise<any> => {
+	const response = await fetch(DELETE_TOPIC_COMMENT + topicId, {
+		method: "DELETE",
+		headers: {
+			"Content-Type": "application/json",
+			"Access-Control-Allow-Origin": "*",
+		},
+	})
+	return response.json();
+}
+
 export const forumService = {
 	getAllTopicCards: () => getAllTopicCards(),
 	getTopicCard: (id: string) => getTopicCard(id),
 	createTopic: (topicCard: any) => createTopic(topicCard),
-	createTopicComment: (setTopicCards: any, topicComment: any, topicId: number) => createTopicComment(setTopicCards, topicComment, topicId)
+	createTopicComment: (setTopicCards: any, topicComment: any, topicId: number) => createTopicComment(setTopicCards, topicComment, topicId),
+	deleteTopicComment: (topicId: number) => deleteTopicComment(topicId)
 }
