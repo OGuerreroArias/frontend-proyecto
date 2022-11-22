@@ -20,7 +20,7 @@ const TopicRoom = () => {
 
   const getTopicCard = async() => {
       const response = await forumService.getTopicCard(id as string)
-      console.log("🚀 ~ file: index.tsx ~ line 25 ~ getTopicCard ~ response", response)
+      // console.log("🚀 ~ file: index.tsx ~ line 25 ~ getTopicCard ~ response", response)
       setTopic(response)
       setTopicComments(response.comments)
   }
@@ -72,12 +72,12 @@ const Ong = ({ comment }: { comment: ITopicComment }) => {
   return (
     <Flex bg={"white"} p={6} gap={8}>
       <Avatar name="Dan Abrahmov" src="https://bit.ly/dan-abramov" />
-      <Box>
+      <Box w={"full"}>
         <Flex mb={2} justifyContent="space-between">
           <Heading id="author" as="h3" size="md" color={"blackAlpha.600"}>
             {ongData?.name}
           </Heading>
-          <Text>{comment?.creationDate}</Text>
+          <Text >{comment?.creationDate}</Text>
           {/* <Text as="p"></Text> */}
         </Flex>
         <Box color={"blackAlpha.600"}>{comment?.content}</Box>
@@ -92,12 +92,12 @@ const Volunteer = ({ comment }: { comment: ITopicComment }) => {
   return (
     <Flex bg={"white"} p={6} gap={8}>
       <Avatar name="Dan Abrahmov" src="https://bit.ly/dan-abramov" />
-      <Box>
+      <Box w={"full"}>
         <Flex mb={2} justifyContent="space-between">
           <Heading id="author" as="h3" size="md" color={"blackAlpha.600"}>
             {volunteerData.name} {volunteerData.lastName}
           </Heading>
-          <Text>{comment.creationDate}</Text>
+          <Text >{comment.creationDate}</Text>
           {/* <Text as="p"></Text> */}
         </Flex>
         <Box color={"blackAlpha.600"}>{comment.content}</Box>

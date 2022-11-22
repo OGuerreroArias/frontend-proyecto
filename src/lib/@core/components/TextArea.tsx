@@ -22,13 +22,14 @@ const TextAreaElement = ({
     e.preventDefault();
     let type = "";
 
-    isVolunteer(user) ? (type = "volunteer") : (type = "user");
+    isVolunteer(user) ? (type = "volunteer_id") : (type = "ong_id");
 
     const comment = {
       [type]: user?.id,
       content: value,
-      creationDate: new Date().toDateString(),
+      creationDate: new Date(),
     };
+    console.log("🚀 ~ file: TextArea.tsx ~ line 32 ~ handleSubmit ~ comment", comment)
     // console.log(
     //   "🚀 ~ file: TextArea.tsx ~ line 31 ~ handleSubmit ~ comment",
     //   comment

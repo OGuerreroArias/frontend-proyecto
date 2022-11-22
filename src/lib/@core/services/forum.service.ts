@@ -89,7 +89,7 @@ export interface IVolunteer {
 
 const GET_TOPICOS = "http://localhost:8080/foro/publications"  // put topico 
 const GET_TOPICO_BY_ID = "http://localhost:8080/foro/publications/"  //get topico 
-const POST_COMMIT_TOPIC = "http://localhost:8080/foro/publications/"
+const POST_COMMIT_TOPIC = "http://localhost:8080/foro/publications/" // solo body
 const POST_COMMIT_TOPIC2 = "/comments"  // coementar un topico por Id  // 370021309 es el id del topico"
 
 const getAllTopicCards = async (): Promise<any> => {
@@ -108,17 +108,17 @@ const getTopicCard = async (id: string): Promise<any> => {
 	return response.json();
 }
 
-// const createTopic = async (topicCard: any): Promise<any> => {
-// 	const reponse = await fetch(, {
-// 		method: "POST",
-// 		headers: {
-// 			"Content-Type": "application/json",
-// 			"Access-Control-Allow-Origin": "*",
-// 		},
-// 		body: JSON.stringify(topicCard)
-// 	})
-// 	return reponse.json();
-// }
+const createTopic = async (topicCard: any): Promise<any> => {
+	const reponse = await fetch(POST_COMMIT_TOPIC, {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json",
+			"Access-Control-Allow-Origin": "*",
+		},
+		body: JSON.stringify(topicCard)
+	})
+	return reponse.json();
+}
 
 const createTopicComment = async(setTopicCards: any, topicComment: any, topicId: number): Promise<any> => {
 
@@ -130,6 +130,7 @@ const createTopicComment = async(setTopicCards: any, topicComment: any, topicId:
 		},
 		body: JSON.stringify(topicComment)
 	})
+	console.log("🚀 ~ file: forum.service.ts ~ line 133 ~ createTopicComment ~ response", response)
 	
 	return response.json();
 }
@@ -137,6 +138,6 @@ const createTopicComment = async(setTopicCards: any, topicComment: any, topicId:
 export const forumService = {
 	getAllTopicCards: () => getAllTopicCards(),
 	getTopicCard: (id: string) => getTopicCard(id),
-	// createTopic: (topicCard: any) => createTopic(topicCard),
+	createTopic: (topicCard: any) => createTopic(topicCard),
 	createTopicComment: (setTopicCards: any, topicComment: any, topicId: number) => createTopicComment(setTopicCards, topicComment, topicId)
 }

@@ -30,7 +30,7 @@ import { projectService } from "lib/@core/services/project.service";
 
 export default function ProjectModal({setProjects}: any) {
 	const { isOpen, onOpen, onClose } = useDisclosure();
-	const {user} = useContext(AuthContext);
+	const {user,isVolunteer} = useContext(AuthContext);
 
 	const formik = useFormik({
 		initialValues: {
@@ -57,15 +57,20 @@ export default function ProjectModal({setProjects}: any) {
 
 	return (
 		<>
-			<Button
-				variant={"solid"}
-				colorScheme={"teal"}
-				size={"sm"}
-				mr={4}
-				onClick={onOpen}
-				leftIcon={<AddIcon />}
-			>
-			</Button>
+			{
+				!isVolunteer(user) && (
+					<Box display={"flex"} justifyContent={"flex-end"} p={4}>
+				<Button
+					variant={"solid"}
+					colorScheme={"teal"}
+					size={"sm"}
+					onClick={onOpen}
+					leftIcon={<AddIcon />}
+				>
+				</Button>
+			</Box>
+				)
+			}
 			<Modal onClose={onClose} isOpen={isOpen} isCentered size={"2xl"}>
 				<ModalOverlay />
 				<ModalContent>

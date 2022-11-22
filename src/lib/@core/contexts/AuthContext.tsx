@@ -10,7 +10,7 @@ export const AuthProvider: any = ({ children }: any) => {
   const [loading, setLoading] = useState<boolean>(true);
 
   const isVolunteer = (user: any) => {
-    console.log(user)
+    // console.log(user)
     return user.lastName !== undefined;
   };
   const signOut = () => {
