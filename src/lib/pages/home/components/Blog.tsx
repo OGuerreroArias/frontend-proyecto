@@ -138,7 +138,7 @@ const Blog = () => {
 				</Box>
 			</Box>
 			<Heading as="h2" marginTop="5">
-				Latest articles
+				Noticias
 			</Heading>
 			<Divider marginTop="5" />
 			<Grid templateColumns="repeat(3, 1fr)" gap={6}>
